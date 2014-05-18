@@ -24,7 +24,7 @@ class Gallery extends Spine.Model
 
   @selectAttributes: ['name']
   
-  @url: '' + base_url + 'galleries'
+  @url: -> Model.host + '/galleries'
 
   @fromJSON: (objects) ->
     @log 'fromJSON'

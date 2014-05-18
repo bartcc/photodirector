@@ -47,6 +47,7 @@ class OverviewView extends Spine.Controller
     @carousel.focus()
     
   parse: (json) ->
+    @log 'parse'
     recents = []
     for item in json
       recents.push item['Photo']
@@ -54,6 +55,7 @@ class OverviewView extends Spine.Controller
     @render Recent.all()
     
   render: (tests) ->
+    @log 'render', tests
     #validate fresh records against existing model collection
     items = []
     for test in tests
@@ -70,17 +72,20 @@ class OverviewView extends Spine.Controller
     height: height
     
   uri: (items) ->
-    try
-      Photo.uri @thumbSize(),
-        (xhr, records) => @callback(xhr, items),
-        items
-    catch e
-      @log e
-      alert "New photos found. \n\nRestarting Application!"
-      User.redirect 'director_app'
+    @log 'uri', items
+#    try
+    Photo.uri @thumbSize(),
+      (xhr, records) => @callback(xhr, items),
+      items
+#    catch e
+#      @log e
+#      alert "New photos found. \n\nRestarting Application!"
+#      User.redirect 'director_app'
   
   callback: (json, items) =>
     @log 'callback'
+    @log json
+    @log items
     searchJSON = (id) ->
       for itm in json
         return itm[id] if itm[id]

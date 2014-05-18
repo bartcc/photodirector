@@ -34,7 +34,7 @@ class Album extends Spine.Model
   
   @previousID: false
 
-  @url: '' + base_url + @className.toLowerCase() + 's'
+#  @url: '' + base_url + @className.toLowerCase() + 's'
 
   @fromJSON: (objects) ->
     super

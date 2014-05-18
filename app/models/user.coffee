@@ -18,15 +18,15 @@ class User extends Spine.Model
     @fetch()
     if user = @first()
       user.confirm()
-    else
-      @redirect 'users/login'
+#    else
+#      @redirect 'users/login'
     
   @logout: ->
     @destroyAll()
     @redirect 'logout'
   
   @redirect: (url='', hash='') ->
-    location.href = base_url + url + hash
+    location.href = url + hash
 
   init: (instance) ->
     return unless instance
@@ -44,7 +44,7 @@ class User extends Spine.Model
 
   error: (xhr) =>
     @log 'error'
-    @constructor.logout()
-    @constructor.redirect 'users/login'
+#    @constructor.logout()
+#    @constructor.redirect 'users/login'
       
 module?.exports = User

@@ -1,11 +1,19 @@
 <html xmlns="http://www.w3.org/1999/xhtml"><head>
-    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">    <title>
-            DirectorApp    </title>
-    <link rel="icon" type="image/x-icon" href="/favicon.ico"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico"><link href="/css/themes/jquery-ui/ui-darkness/jquery-ui-1.8.16.custom.css" type="text/css" rel="stylesheet"><link href="/css/twitter/bootstrap/css/bootstrap.css" type="text/css" rel="stylesheet"><link href="/css/blueimp/jquery.fileupload-ui.css" type="text/css" rel="stylesheet"><link href="/css/blueimp/blueimp-gallery.css" type="text/css" rel="stylesheet"><link href="/css/blueimp/blueimp-gallery-indicator.css" type="text/css" rel="stylesheet"><link href="/css/html5sortable/jquery.sortable.css" type="text/css" rel="stylesheet"><link href="/js/spine/director/public/application.css" type="text/css" rel="stylesheet"><script type="text/javascript">
-//&lt;![CDATA[
-    var base_url = '/';
-    
-//]]&gt;
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <title>DirectorApp</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/css/themes/jquery-ui/ui-darkness/jquery-ui-1.8.16.custom.css" type="text/css" rel="stylesheet">
+    <link href="/css/twitter/bootstrap/css/bootstrap.css" type="text/css" rel="stylesheet">
+    <link href="/css/blueimp/jquery.fileupload-ui.css" type="text/css" rel="stylesheet">
+    <link href="/css/blueimp/blueimp-gallery.css" type="text/css" rel="stylesheet">
+    <link href="/css/blueimp/blueimp-gallery-indicator.css" type="text/css" rel="stylesheet">
+    <link href="/css/html5sortable/jquery.sortable.css" type="text/css" rel="stylesheet">
+    <link href="application.css" type="text/css" rel="stylesheet">
+<script type="text/javascript">
+  //&lt;![CDATA[
+  var base_url = '/';
+  //]]&gt;
 </script>
 <script src="application.js" type="text/javascript"></script>
 <script type="text/javascript">
@@ -14,12 +22,8 @@
     var exports = this;
     $(function() {
       
-      var isProduction = true
-      
+      var isProduction = false
       var route   = localStorage.hash
-      var galleries = [];
-      var albums = [];
-      var photos = [];
       var startScript = function() {
         setTimeout(function() {
           //App.showView.toggleDraghandle('');
@@ -38,6 +42,11 @@
       Gallery= require('models/gallery')
       Album = require('models/album')
       Photo= require('models/photo')
+      Spine.Model.host = "http://gap.webpremiere.dev"
+      
+      //var galleries = Gallery.fetch({xhrFields: {'withCredentials': true}});
+      var albums = [];//Album.fetch();
+      var photos = [];//Photo.fetch();
       
       User.ping();
       exports.App = new Main({el: $("body")});
@@ -45,12 +54,13 @@
       
       Photo.refresh(photos, {clear: true});
       Album.refresh(albums, {clear: true});
-      Gallery.refresh(galleries, {clear: true});
+      //Gallery.refresh(galleries, {clear: true});
       
       Spine.Route.setup()
-      App.navigate();
-      App.navigate(route || '/overview');
-      startScript()
+      //App.navigate();
+      //App.navigate(route || '/overview');
+      //startScript();
+      App.start()
       
     });
     

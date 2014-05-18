@@ -3,11 +3,14 @@ $         = Spine.$
 Model     = Spine.Model
 Photo     = require("models/photo")
 User      = require("models/user")
+Extender  = require("plugins/model_extender")
 
 require('spine/lib/local')
 
 class Recent extends Spine.Model
 
+  @extend Extender
+  
   @configure 'Recent', 'id'
   
   @extend Model.Local
@@ -27,16 +30,17 @@ class Recent extends Spine.Model
       contentType: 'application/json'
       dataType: 'json'
       processData: false
-      headers: {'X-Requested-With': 'XMLHttpRequest'}
-      url: base_url + 'photos/recent/' + max
+      headers: {'X-Requested-With': 'XMLHttpRequest', 'X-PING': 'pingpong'}
+      url: "http://gap.webpremiere.dev" + base_url + 'photos/recent/' + max
       type: 'GET'
-      success: (json) -> callback.call @, json
+      success: callback
       error: @proxy @error
   
   @success: (json) ->
+    @log json
 
   @error: (xhr) ->
-    @logout()
-    @redirect 'users/login'
+    @log xhr
+#    @logout()
       
 module?.exports = Model.Recent = Recent

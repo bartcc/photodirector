@@ -51,7 +51,7 @@ class Base
     @ajaxQueue =>
       @ajax(
         type: "POST"
-        url: base_url + 'photos/uri/' + @url
+        url: Model.host + base_url + 'photos/uri/' + @url
         data: JSON.stringify(@data)
       ).done(@recordResponse)
        .fail(@failResponse)

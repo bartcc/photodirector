@@ -35,7 +35,7 @@ class Photo extends Spine.Model
       foreignKey            : 'photo_id'
       associationForeignKey : 'album_id'
 
-  @url: '' + base_url + @className.toLowerCase() + 's'
+#  @url: '' + base_url + @className.toLowerCase() + 's'
 
   @fromJSON: (objects) ->
     @log 'fromJSON'
@@ -62,6 +62,7 @@ class Photo extends Spine.Model
     Photo.trigger('uri', uri)
     
   @error: (json) =>
+    @log 'error'
     Photo.trigger('ajaxError', json)
   
   @create: (atts) ->

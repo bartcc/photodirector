@@ -2,11 +2,13 @@ Spine                   = require("spine")
 $                       = Spine.$
 Drag                    = require("plugins/drag")
 User                    = require('models/user')
+Session                 = require('models/session')
 Config                  = require('models/config')
 Album                   = require('models/album')
 Gallery                 = require('models/gallery')
 Toolbar                 = require("models/toolbar")
 SpineError              = require("models/spine_error")
+Session                 = require("models/session")
 MainView                = require("controllers/main_view")
 LoginView               = require("controllers/login_view")
 LoaderView              = require("controllers/loader_view")
@@ -87,7 +89,7 @@ class Main extends Spine.Controller
     $(window).bind('hashchange', @proxy @storeHash)
     $(window).bind('focus', @proxy @focus)
     
-    User.bind('pinger', @proxy @validate)
+#    User.bind('pinger', @proxy @validate)
     $('#modal-gallery').bind('hidden', @proxy @hideSlideshow)
     
     @modalSimpleView = new ModalSimpleView
@@ -240,6 +242,16 @@ class Main extends Spine.Controller
       
     # clean up placeholders, jquery-sortable-plugin sometimes leaves alone
     $('.sortable-placeholder').detach()
+      
+  start: ->
+    @session = new Session()
+    if @session.authenticated()
+      # redirect to user page
+      @setupView()
+    else
+      # launch a login form
+      alert 'redirecting'
+      Session.redirect('http://gap.webpremiere.dev/twitter')
       
   setupView: ->
     Spine.unbind('uri:alldone')

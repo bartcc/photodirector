@@ -121,7 +121,7 @@ Model.Extender =
             error       : error
 
           error.save()
-          User.redirect 'users/login'
+          User.redirect Model.host + base_url + 'users/login'
           
       customErrorHandler: (record, xhr) ->
         status = xhr.status
